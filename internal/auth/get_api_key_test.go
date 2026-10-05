@@ -7,7 +7,7 @@ import (
 
 func TestGetAPIKey_Success(t *testing.T) {
 	headers := http.Header{}
-	headers.Set("Authorizatio", "ApiKey my-secret-key")
+	headers.Set("Authorization", "ApiKey my-secret-key")
 
 	key, err := GetAPIKey(headers)
 	if err != nil {
@@ -32,7 +32,7 @@ func TestGetAPIKey_NoAuthHeader(t *testing.T) {
 
 func TestGetAPIKey_MalformedHeader_WrongPrefix(t *testing.T) {
 	headers := http.Header{}
-	headers.Set("Authorizatio", "Bearer my-secret-key")
+	headers.Set("Authorization", "Bearer my-secret-key")
 
 	_, err := GetAPIKey(headers)
 	if err == nil {
@@ -42,7 +42,7 @@ func TestGetAPIKey_MalformedHeader_WrongPrefix(t *testing.T) {
 
 func TestGetAPIKey_MalformedHeader_MissingKey(t *testing.T) {
 	headers := http.Header{}
-	headers.Set("Authorizatio", "ApiKey")
+	headers.Set("Authorization", "ApiKey")
 
 	_, err := GetAPIKey(headers)
 	if err == nil {
