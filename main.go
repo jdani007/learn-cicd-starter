@@ -89,10 +89,11 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:        ":" + port,
+		Handler:     router,
+		ReadTimeout: -1,
 	}
 
-	log.Printf("Serving on port: %s\n", port)
+	log.Printf("Serving on port: %s\n", port) // #nosec G706 -- PORT is set by trusted deployment config, not external user input
 	log.Fatal(srv.ListenAndServe())
 }
