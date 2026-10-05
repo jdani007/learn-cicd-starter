@@ -7,7 +7,6 @@ import (
 	"log"
 	"net/http"
 	"os"
-	"strconv"
 
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
@@ -34,9 +33,6 @@ func main() {
 	port := os.Getenv("PORT")
 	if port == "" {
 		log.Fatal("PORT environment variable is not set")
-	}
-	if _, err := strconv.Atoi(port); err != nil {
-		log.Fatal("PORT environment variable must be numeric")
 	}
 
 	apiCfg := apiConfig{}
@@ -95,7 +91,7 @@ func main() {
 	srv := &http.Server{
 		Addr:        ":" + port,
 		Handler:     router,
-		ReadTimeout: 10,
+		ReadTimeout: -1,
 	}
 
 	log.Printf("Serving on port: %s\n", port) // #nosec G706 -- PORT is set by trusted deployment config, not external user input
